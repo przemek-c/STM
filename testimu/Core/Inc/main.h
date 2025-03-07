@@ -80,8 +80,13 @@ void Error_Handler(void);
 #define SPI1_CS_Pin GPIO_PIN_6
 #define SPI1_CS_GPIO_Port GPIOB
 
-/* USER CODE BEGIN Private defines */
+/* Exported variables prototypes ---------------------------------------------*/
+extern UART_HandleTypeDef huart1;
 
+/* USER CODE BEGIN Private defines */
+// chyba tu
+/* Exported variables prototypes ---------------------------------------------*/
+extern UART_HandleTypeDef huart1;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
