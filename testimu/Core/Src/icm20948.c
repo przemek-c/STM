@@ -440,16 +440,15 @@ static void select_user_bank(userbank ub)
 
 static uint8_t read_single_icm20948_reg(userbank ub, uint8_t reg)
 {
-	uint8_t read_reg = READ | reg;
-	uint8_t reg_val;
-	select_user_bank(ub);
+    uint8_t tx_data[2] = {READ | reg, 0x00}; // Register address + dummy byte
+    uint8_t rx_data[2] = {0, 0};             // Buffer for received data
+    select_user_bank(ub);
 
-	cs_low();
-	HAL_SPI_Transmit(ICM20948_SPI, &read_reg, 1, 1000);
-	HAL_SPI_Receive(ICM20948_SPI, &reg_val, 1, 1000);
-	cs_high();
+    cs_low();
+    HAL_SPI_TransmitReceive(ICM20948_SPI, tx_data, rx_data, 2, 1000);
+    cs_high();
 
-	return reg_val;
+    return rx_data[1]; // Second byte contains the actual register value
 }
 
 static void write_single_icm20948_reg(userbank ub, uint8_t reg, uint8_t val)
